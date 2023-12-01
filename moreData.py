@@ -37,6 +37,14 @@ def getEarthquakesForYear(year):
         df = df.drop(columns = ["place", "updated", "tz", "url", "sources", "types", "title", "net", "type"])
         df['status'] = df['status'].map({'automatic': 0, 'reviewed': 1})
         df = pd.get_dummies(df, dummy_na=True, columns=['alert'])
+        '''
+        columns_to_check = ["alert_green", "alert_yellow", "alert_orange", "alert_red"]
+        # Check if the column exists
+        for column_to_check in columns_to_check:
+            if column_to_check not in df.columns:
+                # If it doesn't exist, create it and fill with zeros
+                df[column_to_check] = 0
+        '''
         df = pd.get_dummies(df, columns=['magType'])
 
         return df
@@ -61,7 +69,7 @@ collection = database['tsunamidata']
 
 
 # we deleted all current data to replace them with a clean dataset
-# result = collection.delete_many({})
+#result = collection.delete_many({})
 
 
 
